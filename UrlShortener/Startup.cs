@@ -1,14 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UrlShortener.Business.Services;
+using UrlShortener.Core.Configuration;
 using UrlShortener.Core.Services;
 using UrlShortener.Data.Factories;
 using UrlShortener.Data.Repositories;
@@ -35,6 +31,9 @@ namespace UrlShortener
             services.AddScoped<IShortUrlService, ShortUrlService>();
 
             services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
+
+            services.Configure<DatabaseOptions>(Configuration.GetSection(DatabaseOptions.SectionName));
+            services.Configure<UrlGenerationOptions>(Configuration.GetSection(UrlGenerationOptions.SectionName));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +45,7 @@ namespace UrlShortener
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -63,16 +62,6 @@ namespace UrlShortener
                     name: "default",
                     pattern: "{controller=ShortUrl}/{action=Create}");
             });
-
-            // ToDo:
-            // [x] Add data layer - make this a dictionary of <LongUrl, ShortUrl>
-            // [x] Make sure the Url doesn't exist already
-            // [x] Make the URL min 3 chars?
-            // [x] Randomly generate, not sequential
-            // [x] Don't generate existing URLs
-            // [x] UnitTests?
-            // [ ] Form with an input box (material?)
-            // [ ] AJAX POST request?
         }
     }
 }
