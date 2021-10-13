@@ -1,0 +1,17 @@
+﻿@model ShortUrlModel
+
+@{
+    ViewData["Title"] = "Your Short Url";
+}
+
+<section class="mb-5 text-center">
+    <h1 class="display-4">Congrats</h1>
+    <p>Your shortened URL is below. Extra room for the internet to read your thoughts now!</p>
+
+    <p class="mb-1">
+        <a href="@Model.ShortUri" target="_blank">@Model.ShortUri</a>
+    </p>
+    <p>
+        <span class="text-muted">@Model.LongUri</span>
+    </p>
+</section>

@@ -1,0 +1,34 @@
+﻿@model CreateShortUrlModel
+
+@{
+    ViewData["Title"] = "Create Short Url";
+}
+
+<section class="mb-5 text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p class="mb-1">Is your URL taking up most of what you have to say? Don't worry, we have you covered.</p>
+    <p>Simply enter your long URL below, and we'll give you a shortened version to share out.</p>
+</section>
+
+<form asp-action="Create" class="shadow p-3">
+    <div class="text-danger row justify-content-center" asp-validation-summary="All"></div>
+
+    <div class="row g-3 justify-content-center">
+        <div class="col-auto">
+            <label asp-for="Uri" class="col-form-label">Url</label>
+        </div>
+        <div class="col-auto">
+            <input type="url" asp-for="Uri" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <span class="form-text text-muted small">Please enter the URL you would like to shorten.</span>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        <button type="submit" class="btn btn-primary">Shorten!</button>
+    </div>
+</form>
